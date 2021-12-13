@@ -1,50 +1,75 @@
 package com.example.login02_application;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.arch.core.internal.SafeIterableMap;
 
+import java.io.UnsupportedEncodingException;
 
 public class ProductActivity extends AppCompatActivity {
-
-    TextView titleText;
+    EditText jinputMessage;
+    TextView jinputCount;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        titleText = (TextView) findViewById(R.id.titleText);
+        jinputMessage = findViewById(R.id.xinputMessage);
+        jinputCount = findViewById(R.id.xinputCount);
 
-        // process received intent
-        Intent receivedIntent = getIntent();
-        String titleMsg = receivedIntent.getStringExtra("titleMsg");
+        Button jsendButton = findViewById(R.id.xsendButton);
+        jsendButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String message = jinputMessage.getText().toString();
+                Toast.makeText(getApplicationContext(), "전송할 메시지 \n\n" + message, Toast.LENGTH_LONG).show();
+            }
+        });
 
-        Toast.makeText(this, "titleMsg : " + titleMsg, Toast.LENGTH_LONG).show();
-
-        if (titleText != null) {
-            titleText.setText(titleMsg);
-        }
-
-
-        Button backButton = (Button) findViewById(R.id.backButton);
-        backButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("message", "result message is OK!");
-
-                setResult(Activity.RESULT_OK, resultIntent);
+        Button jcloseButton = findViewById(R.id.xcloseButton);
+        jcloseButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
                 finish();
             }
         });
 
-    }
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence str, int start, int before, int count) {
+                byte[] bytes = null;
+                try {
+                    bytes = str.toString().getBytes("KSC5601");
+                    int strCount = bytes.length;
+                    jinputCount.setText(strCount + " / 80바이트");
+                } catch (UnsupportedEncodingException ex) {
+                    ex.printStackTrace();
+                }
+            }
 
+            public void beforeTextChanged(CharSequence str, int start, int count, int after) {
+
+            }
+
+            public void afterTextChanged(Editable strEditable) {
+                String str = strEditable.toString();
+                try {
+                    byte[] strBytes = str.getBytes("KSC5601");
+                    if (strBytes.length > 80) {
+                        strEditable.delete(strEditable.length()-2,strEditable.length()-1);
+                    }
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        };
+        jinputMessage.addTextChangedListener(watcher);
+    }
 }

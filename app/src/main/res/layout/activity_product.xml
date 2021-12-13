@@ -1,35 +1,67 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProductActivity">
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:padding="20dp"
-        android:layout_centerInParent="true"
-        android:background="#aaffffff"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <TextView
-            android:id="@+id/titleText"
-            android:layout_width="180dp"
+            android:id="@+id/xinputCount"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="매출 관리"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:textColor="#ff333333"
-            />
+            android:text="0 / 80 바이트"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:textColor="#ff0000ff"
+            android:textSize="15sp"/>
+        <EditText
+            android:id="@+id/xinputMessage"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:maxLength="80"
+            android:layout_gravity="center_horizontal"
+            android:textSize="30sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="3">
+
         <Button
-            android:id="@+id/backButton"
-            android:layout_width="180dp"
+            android:id="@+id/xsendButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="메뉴 화면"
-            android:textSize="18dp"
-            android:textStyle="bold"
+            android:layout_gravity="top"
+            android:layout_margin="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="전송"
+            android:textSize="16sp"/>
+        <Button
+            android:id="@+id/xcloseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:onClick="closeButton"
+            android:text="닫기"
+            android:textSize="16sp"
             />
     </LinearLayout>
 
-</RelativeLayout>
+
+
+
+
+    </LinearLayout>
